@@ -1,0 +1,39 @@
+{
+	"components": [
+		{
+			"className": ".materialTextBox-wrapper",
+			"id": "8fb2-10a8-12e4-9b45",
+			"initialized": true,
+			"props": {
+				"children": [
+					"7388-4cc2-469d-aeee"
+				],
+				"name": "materialtextbox",
+				"parent": "9b66-1e4d-1d4f-2528"
+			},
+			"source": {
+				"page": "__modules__",
+				"moduleName": "Materialtextbox",
+				"modulePath": "materialtextbox"
+			},
+			"type": "FlexLayout"
+		},
+		{
+			"className": ".materialTextBox-wrapper-dropArrow.hidden",
+			"id": "7388-4cc2-469d-aeee",
+			"props": {
+				"children": [],
+				"name": "imgDropDown",
+				"parent": "8fb2-10a8-12e4-9b45",
+				"usePageVariable": true
+			},
+			"source": {
+				"page": "__library__"
+			},
+			"type": "ImageView",
+			"userProps": {
+				"usePageVariable": true
+			}
+		}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"name": "materialtextbox",
+	"type": "library",
+	"title": "Material Text Box",
+	"author": "furkan.arabaci@smartface.io",
+	"description": "UI.MaterialTextBox wrapper for ease of usage",
+	"themePath": "themes/MaterialTextBox.json",
+	"resources": {
+		"images": [
+			"arrowbottom"
+		],
+		"fonts": [],
+		"classNames": [
+			".materialTextBox"
+		]
+	},
+	"dependencies": [],
+	"imagePaths": [
+		"preview/flMaterialTextBox.png"
+	],
+	"version": "1.3.8",
+	"readMePath": "README.md"
+}
