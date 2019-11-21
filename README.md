@@ -106,7 +106,7 @@ function onLoad(superOnLoad) {
 - Run `npm install` under scripts directory. Running `npm update` WILL NOT sync the package with the npm.
 
 ## Contribution
-- Check [CONTRIBUTION.md](https://github.com/smartface/component-materialtextbox/blob/master/CONTRIBUTING.md).
+- Check [CONTRIBUTING.md](https://github.com/smartface/component-materialtextbox/blob/master/CONTRIBUTING.md).
 
 ## Feedback
 * [File an issue](https://github.com/smartface/component-materialTextBox/issues)

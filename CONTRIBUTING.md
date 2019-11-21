@@ -35,8 +35,6 @@
 
 * Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
-* Before submitting, please read the [Contribution guide](https://github.com/smartface/component-materialtextbox/blob/master/contributing.md) to know more about coding conventions and benchmarks.
-
 Thanks! :heart: :heart:
 
 Smartface Team
