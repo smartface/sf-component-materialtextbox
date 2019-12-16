@@ -17,7 +17,7 @@ A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.s
 function setMaterialTextBox() {
     const page = this; // Assuming this function is binded to the page.
     const { flEmail } = page;
-    flEmail.options : { 
+    flEmail.options = { 
         hint: "Email Address" ,
         iOS: {
             titleFont: Font.Create("Default", 12)
