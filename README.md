@@ -1,5 +1,5 @@
 # Material TextBox
-## materialTextBox @ 1.3.9
+## materialTextBox @ 1.4.0
 
 A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.
 
@@ -13,16 +13,17 @@ A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.s
 - Show / Hide functionality for senstivie informations like passwords
 
 ## Usage : 
+
+Options object will be assigned directly onto UI.MaterialTextBox class. You can also use platform specific values under it, 
+
 ```javascript
 function setMaterialTextBox() {
     const page = this; // Assuming this function is binded to the page.
     const { flEmail } = page;
-    flEmail.options = { 
-        hint: "Email Address" ,
-        iOS: {
-            titleFont: Font.Create("Default", 12)
-        }
-    }
+    flEmail.options : { 
+        hint: "Email Address",
+        className: ".login" //Documented under theming section, a custom variable for multi theme
+    };
     flEmail.clearAllEnabled = true;
     flEmail.showHideEnabled = true;
     flEmail.enableDropDown = true; // Use this if you ONLY want to have the icon.
@@ -35,6 +36,8 @@ function setMaterialTextBox() {
 Alternatively, you can create your own **materialTextBox** object and add it to the component at will. Example :
 
 ```javascript
+const MaterialTextBox = require("sf-core/ui/materialtextbox");
+
 function setMaterialTextBox() {
     const page = this; // Assuming this function is binded to the page.
     const { flEmail } = page;
@@ -42,12 +45,13 @@ function setMaterialTextBox() {
         hint: "Sign In",
         text: "info@smartface.io"
     });
-    flEmail.initMaterialTextBox(signInMaterialTextBox);
+    flEmail.initMaterialTextBox(signInMaterialTextBox); // Second parameter ( optional ) is className
     // To add a barebone materialTextBox, use addChild() method of contx.
-    flEmail.addChild(signInMaterialTextBox, "materialTextBox");
+    flEmail.addChild(signInMaterialTextBox, "materialTextBox", ".materialTextBox");
+    page.signInMaterialTextBox = signInMaterialTextBox;
 }
 ```
-The latest materialTextBox instance you create will override the previous ones.
+The latest materialTextBox instance you create will override the previous one.
 
 > Learn more about addChild at [contxjs.](https://github.com/smartface/contxjs)
 
@@ -55,7 +59,7 @@ To access the **materialTextBox** itself, follow this behavior
 ```javascript
     function onLoad() {
         const page = this;
-        page.setMaterialTextBox(); // Don't forget to bind.
+        page.setMaterialTextBox();
         const { flEmail } = page;
         flEmail.materialTextBox.onActionButtonPressed = () => {
             alert("Action button pressed");
@@ -75,21 +79,17 @@ All of the properties in materialTextBox will work. You can give platform specif
 
 > **ADDITIONAL NOTE for adding to a library component** : Use [Object.defineProperties()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) or a `function` for your code and call it on `onShow()` or `onLoad()` methods of the parent page.
 
-## Not using UI Editor
-Currently, creating the component from the code **will not** work out of the box. You will need to use **componentContextPatch** to use it from the code. Example usage is given below: 
 
 ```javascript
-const FlMaterialTextBox = require("sf_modules/components/flMaterialTextBox");
-const componentContextPatch = require("@smartface/contx/lib/smartface/componentContextPatch");
+const FlMaterialTextBox = require("sf_modules/materialtextbox");
 
 function onLoad(superOnLoad) {
     superOnLoad();
     const page = this;
     const flEmail = new FlMaterialTextBox();
-    componentContextPatch(flEmail, "flSignIn");
-    page.layout.addChild(flEmail, "flSignIn");
+    page.layout.addChild(flEmail, "flSignIn", ".materialTextBox-wrapper");
     flEmail.options = { 
-        "hint": "Enter Email"
+        hint: "Enter Email"
     };
 }
 ```
@@ -100,10 +100,41 @@ function onLoad(superOnLoad) {
 
 > To change the themes as you like, simply create `themes/${selectedTheme}/styles/default/materialTextBox.json` with your changed styles. You can find best practices for theming under [smartface documentations.](https://developer.smartface.io/docs/using-themes-in-apps)
 
-> Heads-Up: To use more than one theme on **materialTextBox**, you might copy **materialTextBox.json** with different filename and change the theme class under UI editor where component is added.
+> To use multiple themes across one project, simply add subclasses under .materialTextBox class and customize it as you like.
+
+```javascript
+    ".materialTextBox": {
+        ...,
+        ".login": {
+            "ellipsizeMode": "START",
+        },
+        "&-password": {
+            "textAlignment": "MIDRIGHT" 
+        }
+    },
+```
+
+```javascript
+    flEmail.options : { 
+        hint: "Email Address",
+        className: ".login" //Will inherit default class themes 
+    };
+    flPassword.options : { 
+        hint: "Email Address",
+        className: "-password" //Will not inherit default class themes
+    };
+```
+
+The className property will be appended directly into the class which materialTextBox will use. 
+
+```javascript
+    const class = `.materialTextBox${className}`;
+```
+
+> Due to technical limitations, the height of wrapper and materialTextBox inside of it **must be** equal
 
 ## Update
-- Run `npm install` under scripts directory. Running `npm update` WILL NOT sync the package with the npm.
+- Run `npm install` under scripts directory.
 
 ## Contribution
 - Check [CONTRIBUTING.md](https://github.com/smartface/component-materialtextbox/blob/master/CONTRIBUTING.md).
@@ -113,5 +144,5 @@ function onLoad(superOnLoad) {
 * Follow [@smartface](https://twitter.com/smartface_io) and let us know what you think!
 
 Author : furkan.arabaci@smartface.io
-generated by **smartface** 2019.
+generated by **smartface** 2020.
     

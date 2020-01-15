@@ -15,31 +15,19 @@
             "size": 14,
             "family": "Default"
         },
-        "&-labelsFont": {
-            "font": {
-                "size": 14,
-                "family": "Default"
-            }
-        },
-        "&-hintFont": {
-            "font": {
-                "size": 14,
-                "family": "Default"
-            }
-        },
-        "&-rightLayout": {
-            "marginLeft": 1,
-            "marginRight": 1,
-            "paddingBottom": 4,
-            "flexProps": {
-                "alignItems": "FLEX_END",
-                "justifyContent": "FLEX_END",
-                "flexGrow": 1
-            },
-            "+Device:Device.os === \"Android\"": {
-                "marginLeft": 4,
-                "marginRight": 4
-            }
+        "labelsFont": {
+            "size": 14,
+            "family": "Default"
+        }
+    },
+    ".materialTextBox-rightLayout": {
+        "marginLeft": 1,
+        "marginRight": 1,
+        "paddingBottom": 4,
+        "flexProps": {
+            "alignItems": "FLEX_END",
+            "justifyContent": "FLEX_END",
+            "flexGrow": 1
         },
         "&-rightLabel": {
             "textColor": "rgba( 119,119,119,1 )",
@@ -49,31 +37,35 @@
                 "family": "Default"
             }
         },
-        "&-wrapper": {
-            "height": 48,
-            "width": null,
-            "marginLeft": -1,
-            "marginRight": -1,
-            "marginBottom": 16,
-            "+Device:Device.os === \"Android\"": {
-                "height": 81,
-                "marginBottom": -8,
-                "marginLeft": -4,
-                "marginRight": -4
-            },
-            "&-dropArrow": {
-                "flexProps": {
-                    "positionType": "ABSOLUTE"
-                },
-                "right": 2,
-                "height": 30,
-                "width": 30,
-                "top": 20,
-                "image": "arrowbottom.png",
-                ".hidden": {
-                    "visible": false
-                }
-            }
+        "+Device:Device.os === \"Android\"": {
+            "marginLeft": 4,
+            "marginRight": 4
+        }
+    },
+    ".materialTextBox-wrapper": {
+        "height": 48,
+        "width": null,
+        "marginLeft": -1,
+        "marginRight": -1,
+        "marginBottom": 16,
+        "+Device:Device.os === \"Android\"": {
+            "height": 81,
+            "marginBottom": -8,
+            "marginLeft": -4,
+            "marginRight": -4
+        }
+    },
+    ".materialTextBox-wrapper-dropArrow": {
+        "flexProps": {
+            "positionType": "ABSOLUTE"
+        },
+        "right": 2,
+        "height": 30,
+        "width": 30,
+        "top": 20,
+        "image": "arrowbottom.png",
+        ".hidden": {
+            "visible": false
         }
     }
 }

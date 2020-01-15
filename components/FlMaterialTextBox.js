@@ -11,9 +11,7 @@ const MaterialTextBox = require('sf-core/ui/materialtextbox');
 const { getCombinedStyle } = require("sf-extension-utils/lib/getCombinedStyle");
 const componentContextPatch = require("@smartface/contx/lib/smartface/componentContextPatch");
 
-var height = getCombinedStyle(".materialTextBox-wrapper").height;
-var hintFont = getCombinedStyle(".materialTextBox-hintFont").font;
-var labelsFont = getCombinedStyle(".materialTextBox-labelsFont").font;
+const { height: wrapperHeight } = getCombinedStyle(".materialTextBox-wrapper");
 
 const RightLayoutTemplate = {
     showHide: 0,
@@ -88,8 +86,8 @@ const FlMaterialTextBox = extend(FlMaterialTextBoxDesign)(
 
             options: {
                 set: properties => {
-                    let materialTextBox = createMaterialTextBox(properties);
-                    this.initMaterialTextBox(materialTextBox);
+                    const materialTextBox = createMaterialTextBox(properties);
+                    this.initMaterialTextBox(materialTextBox, properties.className);
                     options = properties;
                 },
                 get: () => options
@@ -149,7 +147,7 @@ function createRightLayout(component, RightLayoutTemplate, visible) {
         classNames: [".materialTextBox-rightLayout"]
     });
 
-    rightLayout.addChild(rightLabel, "mtbRightLabel", ".materialTextBox-rightLabel");
+    rightLayout.addChild(rightLabel, "mtbRightLabel", ".materialTextBox-rightLayout-rightLabel");
     initRightLayout(component, RightLayoutTemplate, visible);
 }
 
@@ -232,16 +230,17 @@ function createMaterialTextBox(options) {
     return materialTextBox;
 }
 
-function initMaterialTextBox(materialTextBox) {
+function initMaterialTextBox(materialTextBox, className = "") {
     const component = this;
+    const materialClassName = `.materialTextBox${className}`;
     materialTextBox.onTextChanged = materialTextBox.onTextChanged || function(e) {
         this.errorMessage = "";
     }.bind(materialTextBox);
-    materialTextBox.ios.titleFont = hintFont;
-    materialTextBox.labelsFont = labelsFont;
 
-    component.addChild(materialTextBox, "materialTextBox", ".materialTextBox", userProps => {
-        userProps.height = height;
+    component.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
+        if (wrapperHeight) {
+            userProps.height = userProps.height || wrapperHeight;
+        }
         return userProps;
     });
     this.materialTextBox = materialTextBox;
