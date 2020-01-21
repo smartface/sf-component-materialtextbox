@@ -1,5 +1,5 @@
 # Material TextBox
-## materialTextBox @ 1.4.0
+## materialTextBox @ 1.4.1
 
 A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.
 
