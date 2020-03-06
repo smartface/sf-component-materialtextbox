@@ -1,1 +1,14 @@
-{}
+{
+    "name": "materialtextbox",
+    "description": "A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.",
+    "version": "1.4.1",
+    "main": "index.js",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "sfMarketplaceService import library --packageFolder $(pwd) --wsPath $SMF_CIDE_WS_PATH"
+    },
+    "author": "",
+    "license": "ISC"
+}
