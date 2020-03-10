@@ -1,5 +1,4 @@
 "use strict";
-const extend = require('js-base/core/extend');
 const System = require("sf-core/device/system");
 const Screen = require("sf-core/device/screen");
 const FlMaterialTextBoxDesign = require('../lib/FlMaterialTextBox');
@@ -14,83 +13,81 @@ const RightLayoutTemplate = {
     clearAll: 1
 };
 Object.freeze(RightLayoutTemplate);
-const FlMaterialTextBox = extend(FlMaterialTextBoxDesign)(
-    function(_super, props = {}, pageName) {
-        _super(this, props);
-        this.pageName = pageName;
-        this.initMaterialTextBox = initMaterialTextBox.bind(this);
-        let arrowVisibility = false;
-        let showHideEnabled = false;
-        let clearAllEnabled = false;
-        let dropDownClick = false;
-        let options = props;
-        Object.defineProperties(this, {
-            enableDropDown: {
-                set: value => {
-                    arrowVisibility = value;
-                    setVisibility(this.imgDropDown, value);
-                    this.materialTextBox.ios.clearButtonEnabled = !arrowVisibility;
-                },
-                get: () => arrowVisibility
+FlMaterialTextBox.prototype = Object.create(FlMaterialTextBoxDesign.prototype);
+function FlMaterialTextBox(props = {}, pageName) {
+    FlMaterialTextBoxDesign.call(this, props);
+    this.pageName = pageName;
+    this.initMaterialTextBox = initMaterialTextBox.bind(this);
+    let arrowVisibility = false;
+    let showHideEnabled = false;
+    let clearAllEnabled = false;
+    let dropDownClick = false;
+    let options = props;
+    Object.defineProperties(this, {
+        enableDropDown: {
+            set: value => {
+                arrowVisibility = value;
+                setVisibility(this.imgDropDown, value);
+                this.materialTextBox.ios.clearButtonEnabled = !arrowVisibility;
             },
-            onDropDownClick: {
-                set: value => {
-                    dropDownClick = typeof value === "function";
-                    if (System.OS === "iOS") {
-                        this.onTouchEnded = () => dropDownClick && value();
-                        this.materialTextBox.touchEnabled = !dropDownClick;
-                    }
-                    else {
-                        this.materialTextBox.onTouchEnded = () => {
-                            dropDownClick && value();
-                            return dropDownClick;
-                        };
-                    }
+            get: () => arrowVisibility
+        },
+        onDropDownClick: {
+            set: value => {
+                dropDownClick = typeof value === "function";
+                if (System.OS === "iOS") {
+                    this.onTouchEnded = () => dropDownClick && value();
+                    this.materialTextBox.touchEnabled = !dropDownClick;
+                }
+                else {
+                    this.materialTextBox.onTouchEnded = () => {
+                        dropDownClick && value();
+                        return dropDownClick;
+                    };
+                }
+            }
+        },
+        showHideEnabled: {
+            set: value => {
+                if (this.materialTextBox) {
+                    this.materialTextBox.ios.clearButtonEnabled = !value;
+                    !showHideEnabled && createRightLayout(this, RightLayoutTemplate.showHide, false);
+                    changeOnTextChangedFunction.call(this);
+                    changeOnEditBeginsFunction.call(this);
+                    changeOnEditEndsFunction.call(this);
+                    showHideEnabled = value;
                 }
             },
-            showHideEnabled: {
-                set: value => {
-                    if (this.materialTextBox) {
-                        this.materialTextBox.ios.clearButtonEnabled = !value;
-                        !showHideEnabled && createRightLayout(this, RightLayoutTemplate.showHide, false);
-                        changeOnTextChangedFunction.call(this);
-                        changeOnEditBeginsFunction.call(this);
-                        changeOnEditEndsFunction.call(this);
-                        showHideEnabled = value;
-                    }
-                },
-                get: () => showHideEnabled
+            get: () => showHideEnabled
+        },
+        clearAllEnabled: {
+            set: value => {
+                if (this.materialTextBox) {
+                    this.materialTextBox.ios.clearButtonEnabled = !value;
+                    !clearAllEnabled && createRightLayout(this, RightLayoutTemplate.clearAll, false);
+                    changeOnTextChangedFunction.call(this);
+                    changeOnEditBeginsFunction.call(this);
+                    changeOnEditEndsFunction.call(this);
+                    clearAllEnabled = value;
+                }
             },
-            clearAllEnabled: {
-                set: value => {
-                    if (this.materialTextBox) {
-                        this.materialTextBox.ios.clearButtonEnabled = !value;
-                        !clearAllEnabled && createRightLayout(this, RightLayoutTemplate.clearAll, false);
-                        changeOnTextChangedFunction.call(this);
-                        changeOnEditBeginsFunction.call(this);
-                        changeOnEditEndsFunction.call(this);
-                        clearAllEnabled = value;
-                    }
-                },
-                get: () => clearAllEnabled
+            get: () => clearAllEnabled
+        },
+        options: {
+            set: properties => {
+                const materialTextBox = createMaterialTextBox(properties);
+                this.initMaterialTextBox(materialTextBox, properties.className);
+                options = properties;
             },
-            options: {
-                set: properties => {
-                    const materialTextBox = createMaterialTextBox(properties);
-                    this.initMaterialTextBox(materialTextBox, properties.className);
-                    options = properties;
-                },
-                get: () => options
-            }
-        });
-    }
-);
-
+            get: () => options
+        }
+    });
+}
 function changeOnTextChangedFunction() {
     const component = this;
     const { materialTextBox } = component;
     let textChanged = materialTextBox.onTextChanged;
-    materialTextBox.onTextChanged = function() {
+    materialTextBox.onTextChanged = function () {
         // Override the existing function to have dynamic onTextChanged function
         if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
             materialTextBox.rightLayout.view.visible = !!materialTextBox.text;
@@ -98,12 +95,11 @@ function changeOnTextChangedFunction() {
         textChanged && textChanged();
     }.bind(component);
 }
-
 function changeOnEditBeginsFunction() {
     const component = this;
     const { materialTextBox } = component;
     let editBegins = materialTextBox.onEditBegins;
-    materialTextBox.onEditBegins = function() {
+    materialTextBox.onEditBegins = function () {
         // Override the existing function to have dynamic onTextChanged function
         if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
             materialTextBox.rightLayout.view.visible = !!materialTextBox.text;
@@ -111,12 +107,11 @@ function changeOnEditBeginsFunction() {
         editBegins && editBegins();
     }.bind(component);
 }
-
 function changeOnEditEndsFunction() {
     const component = this;
     const { materialTextBox } = component;
     let editEnds = materialTextBox.onEditEnds;
-    materialTextBox.onEditEnds = function() {
+    materialTextBox.onEditEnds = function () {
         // Override the existing function to have dynamic onTextChanged function
         if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
             materialTextBox.rightLayout.view.visible = false;
@@ -124,7 +119,6 @@ function changeOnEditEndsFunction() {
         editEnds && editEnds();
     }.bind(component);
 }
-
 function createRightLayout(component, RightLayoutTemplate, visible) {
     component.rightLayout = new FlexLayout();
     component.rightLabel = new Label();
@@ -138,7 +132,6 @@ function createRightLayout(component, RightLayoutTemplate, visible) {
     rightLayout.addChild(rightLabel, "mtbRightLabel", ".materialTextBox-rightLayout-rightLabel");
     initRightLayout(component, RightLayoutTemplate, visible);
 }
-
 function initRightLayout(component, RightLayoutTemplate, visible) {
     const { materialTextBox, rightLayout, rightLabel } = component;
     let showTitle = global.lang.show || "SHOW";
@@ -147,7 +140,7 @@ function initRightLayout(component, RightLayoutTemplate, visible) {
     let rightLayoutWidth = 0;
     setVisibility(rightLayout, visible);
     switch (RightLayoutTemplate) {
-        case 0: // SHOWHIDE
+        case 0: { // SHOWHIDE
             rightLabel.text = showTitle;
             let showWidth = rightLabel.font.sizeOfString(showTitle, Screen.width / 2).width;
             let hideWidth = rightLabel.font.sizeOfString(hideWidth, Screen.width / 2).width;
@@ -159,6 +152,7 @@ function initRightLayout(component, RightLayoutTemplate, visible) {
                 materialTextBox.cursorPosition = cursorPosition; // Android workaround for cursor moving around
             };
             break;
+        }
         case 1: // CLEARALL
             rightLabel.text = clearAll;
             rightLayoutWidth = rightLabel.font.sizeOfString(rightLabel.text, Screen.width / 2).width;
@@ -177,7 +171,6 @@ function initRightLayout(component, RightLayoutTemplate, visible) {
         width: rightLayoutWidth + 10 // Seems like sizeOfString is not enough to cut it, add a buffer.
     };
 }
-
 function setVisibility(component, visible) {
     if (component.dispatch) {
         component.dispatch({
@@ -191,7 +184,6 @@ function setVisibility(component, visible) {
         component.visible = visible;
     }
 }
-
 function createMaterialTextBox(options) {
     let defaults = {
         // Other defaults can be found in materialTextBox.json
@@ -212,11 +204,10 @@ function createMaterialTextBox(options) {
     Object.keys(purifiedAndroid).forEach(key => materialTextBox.android[key] = purifiedAndroid[key]);
     return materialTextBox;
 }
-
 function initMaterialTextBox(materialTextBox, className = "") {
     const component = this;
     const materialClassName = `.materialTextBox${className}`;
-    materialTextBox.onTextChanged = materialTextBox.onTextChanged || function(e) {
+    materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
         this.errorMessage = "";
     }.bind(materialTextBox);
     component.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
