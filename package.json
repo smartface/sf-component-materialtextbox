@@ -7,7 +7,7 @@
     "devDependencies": {},
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "if [[ ${AC_BUILD} != true ]]; then sfMarketplaceService import library --packageFolder $(pwd) --wsPath $SMF_CIDE_WS_PATH fi"
+        "postinstall": "[[ ${AC_BUILD} != true ]] && sfMarketplaceService import library --packageFolder $(pwd) --wsPath $SMF_CIDE_WS_PATH"
     },
     "author": "",
     "license": "ISC"
