@@ -210,6 +210,7 @@ function initMaterialTextBox(materialTextBox, className = "") {
     materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
         this.errorMessage = "";
     }.bind(materialTextBox);
+    component.materialTextBox && component.removeChild(component.materialTextBox);
     component.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
         if (wrapperHeight) {
             userProps.height = userProps.height || wrapperHeight;
