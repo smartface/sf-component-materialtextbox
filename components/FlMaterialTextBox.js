@@ -143,7 +143,7 @@ function initRightLayout(component, RightLayoutTemplate, visible) {
         case 0: { // SHOWHIDE
             rightLabel.text = showTitle;
             let showWidth = rightLabel.font.sizeOfString(showTitle, Screen.width / 2).width;
-            let hideWidth = rightLabel.font.sizeOfString(hideWidth, Screen.width / 2).width;
+            let hideWidth = rightLabel.font.sizeOfString(hideTitle, Screen.width / 2).width;
             rightLayoutWidth = Math.max(showWidth, hideWidth);
             rightLayout.onTouchEnded = () => {
                 let { isPassword, cursorPosition } = materialTextBox;
