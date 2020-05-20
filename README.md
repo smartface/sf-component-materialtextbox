@@ -1,18 +1,20 @@
-# Material TextBox
-## materialTextBox @ 1.4.1
+# Smartface MaterialTextBox Component
+
+[![Npm Status](https://img.shields.io/npm/v/materialtextbox/latest?registry_uri=https%3A%2F%2Fcd.smartface.io%2Frepository%2Fsmartfacenpmpublic%2F)]()
 
 A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.
 
-## Installation: 
-- Open the **Marketplace - beta** on the right corner at Smartface IDE & download **Material Text Box**
-- Drag & drop the downloaded **FlMaterialTextBox** component to your `page` or `library component` on the Smartface UI editor at **marketplace** section
+## Installation
+```shell
+(cd ~/workspace/scripts && npm i materialtextbox)
+```
 
-## Features:
+## Features
 - Drop-down arrow and a function to invoked upon click
 - Clear all functionality for both platforms instead of X button on iOS
 - Show / Hide functionality for senstivie informations like passwords
 
-## Usage : 
+## Usage
 
 Options object will be assigned directly onto UI.MaterialTextBox class. You can also use platform specific values under it, 
 
@@ -94,7 +96,7 @@ function onLoad(superOnLoad) {
 }
 ```
 
-## Theming and customization
+## Theming & Customization
 
 > The default theme implementation is under `/themes/baseTheme/styles/default/materialTextBox.json` file. DO NOT make changes on this file.
 
