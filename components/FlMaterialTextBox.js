@@ -23,6 +23,8 @@ function FlMaterialTextBox(props = {}, pageName) {
     let clearAllEnabled = false;
     let dropDownClick = false;
     let options = props;
+    let trim = true;
+    this.trim = trim;
     Object.defineProperties(this, {
         enableDropDown: {
             set: value => {
@@ -73,6 +75,10 @@ function FlMaterialTextBox(props = {}, pageName) {
             },
             get: () => clearAllEnabled
         },
+        trim: {
+            set: value => trim = value,
+            get: () => trim
+        },
         options: {
             set: properties => {
                 const materialTextBox = createMaterialTextBox(properties);
@@ -115,6 +121,9 @@ function changeOnEditEndsFunction() {
         // Override the existing function to have dynamic onTextChanged function
         if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
             materialTextBox.rightLayout.view.visible = false;
+        }
+        if (component.trim) {
+            materialTextBox.text = removeWhiteSpaces(materialTextBox.text || "");
         }
         editEnds && editEnds();
     }.bind(component);
@@ -219,4 +228,10 @@ function initMaterialTextBox(materialTextBox, className = "") {
     });
     this.materialTextBox = materialTextBox;
 }
+
+function removeWhiteSpaces(string) {
+    const pattern = { startsWithWhiteSpace: /^\s+|\s+$/g, moreThanOneWhitespaceBetweenWords: /\s\s+/g };
+    return string.replace(pattern.startsWithWhiteSpace, "").replace(pattern.moreThanOneWhitespaceBetweenWords, " ");
+}
+
 module.exports = FlMaterialTextBox;
