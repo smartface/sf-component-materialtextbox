@@ -1,7 +1,7 @@
 {
     "name": "materialtextbox",
     "description": "A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "main": "index.js",
     "dependencies": {},
     "devDependencies": {},
