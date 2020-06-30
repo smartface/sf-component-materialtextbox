@@ -123,7 +123,8 @@ function changeOnEditEndsFunction() {
             materialTextBox.rightLayout.view.visible = false;
         }
         if (component.trim) {
-            this.text = removeWhiteSpaces(this.text || "");
+            materialTextBox.text = removeWhiteSpaces(materialTextBox.text || "");
+            materialTextBox.onTextChanged();
         }
         editEnds && editEnds();
     }.bind(component);
@@ -219,7 +220,6 @@ function initMaterialTextBox(materialTextBox, className = "") {
     materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
         this.errorMessage = "";
     }.bind(materialTextBox);
-    changeOnEditEndsFunction.call(component);
     component.materialTextBox && component.removeChild(component.materialTextBox);
     component.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
         if (wrapperHeight) {
@@ -228,6 +228,7 @@ function initMaterialTextBox(materialTextBox, className = "") {
         return userProps;
     });
     this.materialTextBox = materialTextBox;
+    changeOnEditEndsFunction.call(component);
 }
 
 function removeWhiteSpaces(string) {
