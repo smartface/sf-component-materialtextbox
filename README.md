@@ -13,6 +13,7 @@ A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.s
 - Drop-down arrow and a function to invoked upon click
 - Clear all functionality for both platforms instead of X button on iOS
 - Show / Hide functionality for senstivie informations like passwords
+- Trim extra whitespaces ( open at default )
 
 ## Usage
 
@@ -32,6 +33,7 @@ function setMaterialTextBox() {
     flEmail.onDropDownClick = () => {
         // Define your function on what to do on the event. It will automatically add the image, therefore, no need to toggle enableDropDown if this is used.
     }
+    flEmail.trim = false; // To disable trim functionality if needed.
 }
 ```
 
