@@ -21,8 +21,7 @@ Options object will be assigned directly onto UI.MaterialTextBox class. You can 
 
 ```javascript
 function setMaterialTextBox() {
-    const page = this; // Assuming this function is binded to the page.
-    const { flEmail } = page;
+    const flEmail = this.flEmail;
     flEmail.options : { 
         hint: "Email Address",
         className: ".login" //Documented under theming section, a custom variable for multi theme
@@ -30,8 +29,11 @@ function setMaterialTextBox() {
     flEmail.clearAllEnabled = true;
     flEmail.showHideEnabled = true;
     flEmail.enableDropDown = true; // Use this if you ONLY want to have the icon.
-    flEmail.onDropDownClick = () => {
-        // Define your function on what to do on the event. It will automatically add the image, therefore, no need to toggle enableDropDown if this is used.
+    flEmail.onDropDownClick = (isInside) => {
+        /** 
+         * This tweaks normal textbox behavior, it executes this function instead of waiting for user input.
+         * To re-enable normal behavior on runtime, define this property to 'undefined' or null
+        */
     }
     flEmail.trim = false; // To disable trim functionality if needed.
 }
@@ -43,16 +45,14 @@ Alternatively, you can create your own **materialTextBox** object and add it to 
 const MaterialTextBox = require("sf-core/ui/materialtextbox");
 
 function setMaterialTextBox() {
-    const page = this; // Assuming this function is binded to the page.
-    const { flEmail } = page;
     const signInMaterialTextBox = new MaterialTextBox({
         hint: "Sign In",
         text: "info@smartface.io"
     });
-    flEmail.initMaterialTextBox(signInMaterialTextBox); // Second parameter ( optional ) is className
+    this.flEmail.initMaterialTextBox(signInMaterialTextBox); // Second parameter ( optional ) is className
     // To add a barebone materialTextBox, use addChild() method of contx.
-    flEmail.addChild(signInMaterialTextBox, "materialTextBox", ".materialTextBox");
-    page.signInMaterialTextBox = signInMaterialTextBox;
+    this.flEmail.addChild(signInMaterialTextBox, "materialTextBox", ".materialTextBox");
+    this.signInMaterialTextBox = signInMaterialTextBox;
 }
 ```
 The latest materialTextBox instance you create will override the previous one.
@@ -62,22 +62,18 @@ The latest materialTextBox instance you create will override the previous one.
 To access the **materialTextBox** itself, follow this behavior
 ```javascript
     function onLoad() {
-        const page = this;
-        page.setMaterialTextBox();
-        const { flEmail } = page;
-        flEmail.materialTextBox.onActionButtonPressed = () => {
+        this.setMaterialTextBox();
+        this.flEmail.materialTextBox.onActionButtonPressed = () => {
             alert("Action button pressed");
-            flEmail.materialTextBox.text = "sales@smartface.io";
+            this.flEmail.materialTextBox.text = "sales@smartface.io";
         };
     }
 ```
 
-> To know about Material textbox better, follow [this guide](https://developer.smartface.io/docs/materialtextbox) for better understanding.
+> To learn more about MaterialTextBox, follow [this guide](https://developer.smartface.io/docs/materialtextbox) for better understanding.
 
 ## Remarks
 All of the properties in materialTextBox will work. You can give platform specific value directly into the object.
-
-> Do not use custom properties like **clearAllEnabled** at options definition, that will be ignored.
 
 > **IMPORTANT NOTE** : Initializing **FlMaterialTextBox** on the constructor might cause unexpected errors and styles for **materialTextBox** will not be applied, because the component is not in the context. Make your implementation in `onShow()` or `onLoad()` methods on the page.
 
@@ -137,8 +133,6 @@ The className property will be appended directly into the class which materialTe
 
 > Due to technical limitations, the height of wrapper and materialTextBox inside of it **must be** equal
 
-## Update
-- Run `npm install` under scripts directory.
 
 ## Contribution
 - Check [CONTRIBUTING.md](https://github.com/smartface/component-materialtextbox/blob/master/CONTRIBUTING.md).
