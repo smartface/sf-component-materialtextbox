@@ -38,7 +38,7 @@ function FlMaterialTextBox(props = {}, pageName) {
             set: value => {
                 dropDownClick = typeof value === "function";
                 if (System.OS === "iOS") {
-                    this.onTouchEnded = () => dropDownClick && value();
+                    this.onTouchEnded = (insInside) => dropDownClick && value(insInside);
                     this.materialTextBox.touchEnabled = !dropDownClick;
                 }
                 else {
