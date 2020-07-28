@@ -6,7 +6,7 @@ const Label = require("sf-core/ui/label");
 const FlexLayout = require("sf-core/ui/flexlayout");
 const MaterialTextBox = require('sf-core/ui/materialtextbox');
 const { getCombinedStyle } = require("sf-extension-utils/lib/getCombinedStyle");
-const componentContextPatch = require("@smartface/contx/lib/smartface/componentContextPatch");
+const componentContextPatch = require("@smartface/contx/lib/smartface/componentContextPatch").default;
 const { height: wrapperHeight } = getCombinedStyle(".materialTextBox-wrapper");
 const RightLayoutTemplate = {
     showHide: 0,
