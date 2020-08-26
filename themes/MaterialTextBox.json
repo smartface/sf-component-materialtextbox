@@ -43,11 +43,10 @@
         }
     },
     ".materialTextBox-wrapper": {
-        "height": 48,
+        "height": null,
         "width": null,
         "marginLeft": -1,
         "marginRight": -1,
-        "marginBottom": 16,
         "+Device:Device.os === \"Android\"": {
             "height": 81,
             "marginBottom": -8,
