@@ -198,7 +198,7 @@ function createMaterialTextBox(options) {
     let defaults = {
         // Other defaults can be found in materialTextBox.json
         ios: {
-            clearButtonEnabled: true
+            clearButtonEnabled: false
         },
         android: {
             enableErrorMessage: true
