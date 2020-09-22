@@ -42,8 +42,8 @@ function FlMaterialTextBox(props = {}, pageName) {
                     this.materialTextBox.touchEnabled = !dropDownClick;
                 }
                 else {
-                    this.materialTextBox.onTouchEnded = () => {
-                        dropDownClick && value();
+                    this.materialTextBox.onTouchEnded = (isInside) => {
+                        dropDownClick && value(isInside);
                         return dropDownClick;
                     };
                 }
