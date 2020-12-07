@@ -22,7 +22,7 @@ Options object will be assigned directly onto UI.MaterialTextBox class. You can 
 ```javascript
 function setMaterialTextBox() {
     const flEmail = this.flEmail;
-    flEmail.options : { 
+    flEmail.options = { 
         hint: "Email Address",
         className: ".login" //Documented under theming section, a custom variable for multi theme
     };
@@ -81,7 +81,7 @@ All of the properties in materialTextBox will work. You can give platform specif
 
 
 ```javascript
-const FlMaterialTextBox = require("sf_modules/materialtextbox");
+const FlMaterialTextBox = require("@smartface/materialtextbox");
 
 function onLoad(superOnLoad) {
     superOnLoad();
@@ -115,11 +115,11 @@ function onLoad(superOnLoad) {
 ```
 
 ```javascript
-    flEmail.options : { 
+    flEmail.options = { 
         hint: "Email Address",
         className: ".login" //Will inherit default class themes 
     };
-    flPassword.options : { 
+    flPassword.options = { 
         hint: "Email Address",
         className: "-password" //Will not inherit default class themes
     };

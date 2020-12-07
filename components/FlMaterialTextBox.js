@@ -220,6 +220,10 @@ function initMaterialTextBox(materialTextBox, className = "") {
     materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
         this.errorMessage = "";
     }.bind(materialTextBox);
+    materialTextBox.onTouchMoved = materialTextBox.onTouchMoved || function () {
+        this.getParent().android.requestDisallowInterceptTouchEvent(true);
+        return false;
+    }.bind(materialTextBox);
     component.materialTextBox && component.removeChild(component.materialTextBox);
     component.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
         if (wrapperHeight) {
