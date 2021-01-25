@@ -98,7 +98,7 @@ function changeOnTextChangedFunction() {
         if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
             materialTextBox.rightLayout.view.visible = !!materialTextBox.text;
         }
-        textChanged && textChanged();
+        textChanged && textChanged.call(materialTextBox);
     }.bind(component);
 }
 function changeOnEditBeginsFunction() {
@@ -110,7 +110,7 @@ function changeOnEditBeginsFunction() {
         if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
             materialTextBox.rightLayout.view.visible = !!materialTextBox.text;
         }
-        editBegins && editBegins();
+        editBegins && editBegins.call(materialTextBox);
     }.bind(component);
 }
 function changeOnEditEndsFunction() {
@@ -126,7 +126,7 @@ function changeOnEditEndsFunction() {
             materialTextBox.text = removeWhiteSpaces(materialTextBox.text || "");
             materialTextBox.onTextChanged();
         }
-        editEnds && editEnds();
+        editEnds && editEnds.call(materialTextBox);
     }.bind(component);
 }
 function createRightLayout(component, RightLayoutTemplate, visible) {
