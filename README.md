@@ -70,7 +70,7 @@ To access the **materialTextBox** itself, follow this behavior
     }
 ```
 
-> To learn more about MaterialTextBox, follow [this guide](https://developer.smartface.io/docs/materialtextbox) for better understanding.
+> To learn more about MaterialTextBox, follow [this guide](https://docs.smartface.io/smartface-native-framework/user-interface-elements/materialtextbox) for better understanding.
 
 ## Remarks
 All of the properties in materialTextBox will work. You can give platform specific value directly into the object.
@@ -98,7 +98,7 @@ function onLoad(superOnLoad) {
 
 > The default theme implementation is under `/themes/baseTheme/styles/default/materialTextBox.json` file. DO NOT make changes on this file.
 
-> To change the themes as you like, simply create `themes/${selectedTheme}/styles/default/materialTextBox.json` with your changed styles. You can find best practices for theming under [smartface documentations.](https://developer.smartface.io/docs/using-themes-in-apps)
+> To change the themes as you like, simply create `themes/${selectedTheme}/styles/default/materialTextBox.json` with your changed styles. You can find best practices for theming under [smartface documentations.](https://docs.smartface.io/smartface-cloud-development/cloud-ide/using-themes-in-apps)
 
 > To use multiple themes across one project, simply add subclasses under .materialTextBox class and customize it as you like.
 
