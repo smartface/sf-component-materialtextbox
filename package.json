@@ -9,7 +9,7 @@
     "devDependencies": {},
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "postinstall": "if [[ ${AC_APPCIRCLE} != 'true' ]]; then sfMarketplaceService import library --packageFolder $(pwd) --wsPath $SMF_CIDE_WS_PATH else true; fi;"
+        "postinstall": "[[ `${AC_APPCIRCLE}` != `true` ]] && sfMarketplaceService import library --packageFolder $(pwd) --wsPath $SMF_CIDE_WS_PATH"
     },
     "author": "",
     "license": "ISC"
