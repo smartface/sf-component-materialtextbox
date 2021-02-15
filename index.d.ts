@@ -6,7 +6,7 @@ declare class FlMaterialTextBox extends FlexLayout {
     enableDropDown: boolean;
     showHideEnabled: boolean;
     clearAllEnabled: boolean;
-    options: Partial<MaterialTextBox>;
+    options: Partial<MaterialTextBox> & { ios?: Partial<typeof MaterialTextBox.ios>, android?: Partial<typeof MaterialTextBox.android> };
     materialTextBox: MaterialTextBox;
     /**
      * @default true
