@@ -42,10 +42,16 @@ function FlMaterialTextBox(props = {}, pageName) {
                     this.materialTextBox.touchEnabled = !dropDownClick;
                 }
                 else {
-                    this.materialTextBox.onTouchEnded = (isInside) => {
-                        dropDownClick && value(isInside);
-                        return dropDownClick;
-                    };
+                    if (dropDownClick) {
+                        this.android.onInterceptTouchEvent = () => { return true; };
+                        this.onTouchEnded = (isInside) => {
+                            dropDownClick && value(isInside);
+                            return dropDownClick;
+                        }
+                    }
+                    else {
+                        this.android.onInterceptTouchEvent = null;
+                    }
                 }
             }
         },
