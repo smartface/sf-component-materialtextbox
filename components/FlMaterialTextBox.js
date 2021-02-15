@@ -42,7 +42,8 @@ function FlMaterialTextBox(props = {}, pageName) {
                     this.materialTextBox.touchEnabled = !dropDownClick;
                 }
                 else {
-                    this.materialTextBox.onTouchEnded = (isInside) => {
+                    this.android.onInterceptTouchEvent = () => { return true; };
+                    this.onTouchEnded = (isInside) => {
                         dropDownClick && value(isInside);
                         return dropDownClick;
                     };
