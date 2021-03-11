@@ -227,7 +227,7 @@ function initMaterialTextBox(materialTextBox, className = "") {
         this.errorMessage = "";
     }.bind(materialTextBox);
     materialTextBox.onTouchMoved = materialTextBox.onTouchMoved || function () {
-        this.getParent().android.requestDisallowInterceptTouchEvent(true);
+        this.getParent().android.requestDisallowInterceptTouchEvent(false);
         return false;
     }.bind(materialTextBox);
     component.materialTextBox && component.removeChild(component.materialTextBox);
