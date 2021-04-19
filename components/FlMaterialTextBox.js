@@ -16,6 +16,7 @@ Object.freeze(RightLayoutTemplate);
 FlMaterialTextBox.prototype = Object.create(FlMaterialTextBoxDesign.prototype);
 function FlMaterialTextBox(props = {}, pageName) {
     FlMaterialTextBoxDesign.call(this, props);
+    this.materialTextBox = {};
     this.pageName = pageName;
     this.initMaterialTextBox = initMaterialTextBox.bind(this);
     let arrowVisibility = false;
@@ -237,7 +238,9 @@ function initMaterialTextBox(materialTextBox, className = "") {
         }
         return userProps;
     });
+    const testId = this.materialTextBox.testId;
     this.materialTextBox = materialTextBox;
+    this.materialTextBox.testId = testId;
     changeOnEditEndsFunction.call(component);
 }
 
