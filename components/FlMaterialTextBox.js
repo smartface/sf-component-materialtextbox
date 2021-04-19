@@ -240,7 +240,9 @@ function initMaterialTextBox(materialTextBox, className = "") {
     });
     const testId = this.materialTextBox.testId;
     this.materialTextBox = materialTextBox;
-    this.materialTextBox.testId = testId;
+    if (testId) {
+        this.materialTextBox.testId = testId;
+    }
     changeOnEditEndsFunction.call(component);
 }
 
