@@ -224,6 +224,11 @@ function createMaterialTextBox(options) {
 function initMaterialTextBox(materialTextBox, className = "") {
     const component = this;
     const materialClassName = `.materialTextBox${className}`;
+    const testId = this.materialTextBox.testId;
+    this.materialTextBox = materialTextBox;
+    if (testId) {
+        this.materialTextBox.testId = testId;
+    }
     materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
         this.errorMessage = "";
     }.bind(materialTextBox);
@@ -238,11 +243,6 @@ function initMaterialTextBox(materialTextBox, className = "") {
         }
         return userProps;
     });
-    const testId = this.materialTextBox.testId;
-    this.materialTextBox = materialTextBox;
-    if (testId) {
-        this.materialTextBox.testId = testId;
-    }
     changeOnEditEndsFunction.call(component);
 }
 
