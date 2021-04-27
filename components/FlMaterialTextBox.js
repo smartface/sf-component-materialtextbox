@@ -61,7 +61,7 @@ function FlMaterialTextBox(props = {}, pageName) {
         },
         showHideEnabled: {
             set: value => {
-                if (this.materialTextBox) {
+                if (this.materialTextBox instanceof MaterialTextBox) {
                     this.materialTextBox.ios.clearButtonEnabled = !value;
                     !showHideEnabled && createRightLayout(this, RightLayoutTemplate.showHide, false);
                     changeOnTextChangedFunction.call(this);
@@ -74,7 +74,7 @@ function FlMaterialTextBox(props = {}, pageName) {
         },
         clearAllEnabled: {
             set: value => {
-                if (this.materialTextBox) {
+                if (this.materialTextBox instanceof MaterialTextBox) {
                     this.materialTextBox.ios.clearButtonEnabled = !value;
                     !clearAllEnabled && createRightLayout(this, RightLayoutTemplate.clearAll, false);
                     changeOnTextChangedFunction.call(this);
@@ -143,7 +143,7 @@ function createRightLayout(component, RightLayoutTemplate, visible) {
     component.rightLayout = new FlexLayout();
     component.rightLabel = new Label();
     const { materialTextBox, rightLayout, rightLabel } = component;
-    if (!materialTextBox && !materialTextBox.iOS) return;
+    if (!materialTextBox instanceof MaterialTextBox) return;
     componentContextPatch(rightLayout, "mtbRightLayout"); // TODO: use $$styleContext
     rightLayout.dispatch({
         type: "pushClassNames",
@@ -239,7 +239,7 @@ function initMaterialTextBox(materialTextBox, className = "") {
         this.getParent().android.requestDisallowInterceptTouchEvent(false);
         return false;
     }.bind(materialTextBox);
-    component.materialTextBox && component.removeChild(component.materialTextBox);
+    component.removeAll();
     component.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
         if (wrapperHeight) {
             userProps.height = userProps.height || wrapperHeight;
