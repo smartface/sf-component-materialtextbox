@@ -16,7 +16,10 @@ Object.freeze(RightLayoutTemplate);
 FlMaterialTextBox.prototype = Object.create(FlMaterialTextBoxDesign.prototype);
 function FlMaterialTextBox(props = {}, pageName) {
     FlMaterialTextBoxDesign.call(this, props);
-    this.materialTextBox = {};
+    this.materialTextBox = {
+        ios: {},
+        android: {}
+    };
     this.pageName = pageName;
     this.initMaterialTextBox = initMaterialTextBox.bind(this);
     let arrowVisibility = false;
