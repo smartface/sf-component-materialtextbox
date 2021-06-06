@@ -1,5 +1,5 @@
-import FlexLayout = require('sf-core/ui/flexlayout');
-import MaterialTextBox = require('sf-core/ui/materialtextbox');
+import FlexLayout = require('@smartface/native/ui/flexlayout');
+import MaterialTextBox = require('@smartface/native/ui/materialtextbox');
 export = FlMaterialTextBox;
 declare class FlMaterialTextBox extends FlexLayout {
     set onDropDownClick(onTouchEnded: (isInside?: boolean) => void);

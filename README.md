@@ -43,7 +43,7 @@ function setMaterialTextBox() {
 Alternatively, you can create your own **materialTextBox** object and add it to the component at will. Example :
 
 ```javascript
-const MaterialTextBox = require("sf-core/ui/materialtextbox");
+const MaterialTextBox = require("@smartface/native/ui/materialtextbox");
 
 function setMaterialTextBox() {
     const signInMaterialTextBox = new MaterialTextBox({
