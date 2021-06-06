@@ -5,8 +5,9 @@
 A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.
 
 ## Installation
+Execute the command on your scripts directory:
 ```shell
-(cd ~/workspace/scripts && npm i materialtextbox)
+npm i @smartface/component-materialtextbox
 ```
 
 ## Features
