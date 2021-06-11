@@ -1,7 +1,7 @@
 {
     "name": "@smartface/component-materialtextbox",
     "description": "A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.",
-    "version": "5.0.0-rc.0",
+    "version": "5.0.0-rc.1",
     "main": "index.js",
     "repository": "https://github.com/smartface/sf-component-materialtextbox",
     "scripts": {
@@ -9,13 +9,15 @@
         "postinstall": "if [[ `${AC_APPCIRCLE}` != `true` ]]; then sfMarketplaceService import library --packageFolder $(pwd) --wsPath $SMF_CIDE_WS_PATH else true; fi;"
     },
     "author": {
-      "email": "info@smartface.io",
-      "name": "Smartface Inc."
+        "email": "info@smartface.io",
+        "name": "Smartface Inc."
     },
-    "maintainers": [{
-        "email": "furkan.arabaci@smartface.io",
-        "name": "Furkan Arabacı"
-    }],
+    "maintainers": [
+        {
+            "email": "furkan.arabaci@smartface.io",
+            "name": "Furkan Arabacı"
+        }
+    ],
     "license": "MIT",
     "publishConfig": {
         "access": "public"
