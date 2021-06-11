@@ -1,10 +1,10 @@
 "use strict";
-const System = require("sf-core/device/system");
-const Screen = require("sf-core/device/screen");
+const System = require("@smartface/native/device/system");
+const Screen = require("@smartface/native/device/screen");
 const FlMaterialTextBoxDesign = require('../lib/FlMaterialTextBox');
-const Label = require("sf-core/ui/label");
-const FlexLayout = require("sf-core/ui/flexlayout");
-const MaterialTextBox = require('sf-core/ui/materialtextbox');
+const Label = require("@smartface/native/ui/label");
+const FlexLayout = require("@smartface/native/ui/flexlayout");
+const MaterialTextBox = require('@smartface/native/ui/materialtextbox');
 const { getCombinedStyle } = require("sf-extension-utils/lib/getCombinedStyle");
 const componentContextPatch = require("@smartface/contx/lib/smartface/componentContextPatch").default;
 const { height: wrapperHeight } = getCombinedStyle(".materialTextBox-wrapper");

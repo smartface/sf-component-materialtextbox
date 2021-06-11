@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - Device: [e.g. iPhone6]
  - OS: [e.g. iOS8.1]
  - Version [e.g. 22]
- - sf-core version [e.g. 4.1.1]
+ - @smartface/native version [e.g. 4.1.1]
  - Emulator/player version [e.g. 6.13.1]
  - contxjs version [e.g. 2.2.9]
 
