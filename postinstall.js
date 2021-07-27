@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const path = require('path');
 
-const WORKSPACE_PATH = path.join(__dirname, '..', '..', '..');
+const WORKSPACE_PATH = path.join(__dirname, '..', '..', '..', '..');
 const SCRIPTS_PATH = __dirname;
 const AC_APPCIRCLE = !!process.env.AC_APPCIRCLE;
 

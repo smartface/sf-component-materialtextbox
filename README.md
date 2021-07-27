@@ -5,8 +5,9 @@
 A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.
 
 ## Installation
+Execute the command on your scripts directory:
 ```shell
-(cd ~/workspace/scripts && npm i materialtextbox)
+npm i @smartface/component-materialtextbox
 ```
 
 ## Features
@@ -42,7 +43,7 @@ function setMaterialTextBox() {
 Alternatively, you can create your own **materialTextBox** object and add it to the component at will. Example :
 
 ```javascript
-const MaterialTextBox = require("sf-core/ui/materialtextbox");
+import MaterialTextBox from "@smartface/native/ui/materialtextbox";
 
 function setMaterialTextBox() {
     const signInMaterialTextBox = new MaterialTextBox({
