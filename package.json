@@ -5,7 +5,9 @@
     "main": "index.js",
     "repository": "https://github.com/smartface/sf-component-materialtextbox",
     "scripts": {
-        "postinstall": "node postinstall.js"
+        "postinstall": "node postinstall.js",
+        "watch": "tsc -w",
+        "build": "tsc"
     },
     "author": {
         "email": "info@smartface.io",
@@ -20,5 +22,17 @@
     "license": "MIT",
     "publishConfig": {
         "access": "public"
+    },
+    "devDependencies": {
+        "@smartface/native": "^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha",
+        "@smartface/extension-utils": "^16.0.0",
+        "@smartface/contx": "^4.0.0",
+        "@types/node": "^16.6.1",
+        "typescript": "^4.3.5"
+    },
+    "peerDependencies": {
+        "@smartface/native": "^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha",
+        "@smartface/extension-utils": "^16.0.0",
+        "@smartface/contx": "^4.0.0"
     }
 }
