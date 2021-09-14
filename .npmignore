@@ -1,0 +1,10 @@
+src
+tsconfig.*
+preview
+.github
+node_modules
+.DS_Store
+npm-debug.*
+yarn-error.*
+tsconfig.*
+assets

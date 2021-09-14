@@ -14,8 +14,10 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: yarn
+        env: 
+          AC_APPCIRCLE: true
       - run: yarn run build
       - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH }}
-          AC_APPCIRCLE: true
+          
