@@ -6,16 +6,15 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 //
 //------------------------------------------------------------------------------
-import { Styleable } from 'generated/core/Styleable';
+import { Styleable } from './core/Styleable';
 import View = require('@smartface/native/ui/view');
-import { ComponentStyleContext } from 'generated/core/ComponentStyleContext';
-import System = require('@smartface/native/device/system');
+import { ComponentStyleContext } from './core/ComponentStyleContext';
 
 import FlexLayout = require('@smartface/native/ui/flexlayout');
 import ImageView = require('@smartface/native/ui/imageview');
 
 export default class Materialtextbox extends FlexLayout implements Styleable {
-	dispatch: (action: { [key: string]: any }) => void;
+	dispatch: (action: { [key: string]: any }) => void = () => {};
 	children: { [key: string]: any } = {};
 	static $$styleContext: ComponentStyleContext = {
 		classNames: '.materialTextBox-wrapper',
@@ -34,16 +33,12 @@ export default class Materialtextbox extends FlexLayout implements Styleable {
 		this.addChild(child);
 	}
 	addChild(child: View, name?: string, classNames?: string, userProps?: { [key: string]: any }, defaultClassNames?: string): void {
-		if (this['layout']) {
-			this['layout'].addChild(child);
-		} else {
-			super.addChild(child);
-		}
+		super.addChild(child);
 	}
 }
 
 class $Materialtextbox$$ImgDropDown extends ImageView implements Styleable {
-	dispatch: (action: { [key: string]: any }) => void;
+	dispatch: (action: { [key: string]: any }) => void= () => {};
 	static $$styleContext: ComponentStyleContext = {
 		classNames: '.materialTextBox-wrapper-dropArrow.hidden',
 		defaultClassNames: '.default_common .default_imageView',

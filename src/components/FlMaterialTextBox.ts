@@ -1,6 +1,6 @@
 import System from "@smartface/native/device/system";
 import Screen from "@smartface/native/device/screen";
-import FlMaterialTextBoxDesign from "../lib/FlMaterialTextBox";
+import FlMaterialTextBoxDesign from "../generated/FlMaterialTextBox";
 import Label from "@smartface/native/ui/label";
 import FlexLayout from "@smartface/native/ui/flexlayout";
 import MaterialTextBox from "@smartface/native/ui/materialtextbox";
@@ -37,7 +37,6 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 
     set enableDropDown(value: boolean) {
         this._arrowVisibility = value;
-        //@ts-ignore
         this.setVisibility(this.imgDropDown, value);
         this.materialTextBox.ios.clearButtonEnabled = !this._arrowVisibility;
     }
@@ -45,15 +44,12 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     set onDropDownClick(value: any) {
         this._dropDownClick = typeof value === "function";
         if (System.OS === "iOS") {
-            //@ts-ignore
             this.onTouchEnded = (isInside: boolean) => this._dropDownClick && value(isInside);
             this.materialTextBox.touchEnabled = !this._dropDownClick;
         }
         else {
             if (this._dropDownClick) {
-                //@ts-ignore
                 this.android.onInterceptTouchEvent = () => { return true; };
-                //@ts-ignore
                 this.onTouchEnded = (isInside: boolean) => {
                     this._dropDownClick && value(isInside);
                     return this._dropDownClick;
@@ -95,7 +91,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
             this._clearAllEnabled = value;
         }
     }
-    
+
     get trim(): boolean {
         return this._trim;
     }
@@ -264,7 +260,6 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
             this.getParent().android.requestDisallowInterceptTouchEvent(false);
             return false;
         }.bind(materialTextBox);
-        //@ts-ignore
         this.removeAll();
         //@ts-ignore
         this.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
@@ -275,5 +270,6 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         });
         this.changeOnEditEndsFunction.call(this);
     }
-    
+
 }
+
