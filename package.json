@@ -1,7 +1,7 @@
 {
     "name": "@smartface/component-materialtextbox",
     "description": "A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.",
-    "version": "5.0.0",
+    "version": "v6.0.0-rc.0",
     "main": "dist/index.js",
     "repository": "https://github.com/smartface/sf-component-materialtextbox",
     "scripts": {
@@ -24,15 +24,15 @@
         "access": "public"
     },
     "devDependencies": {
-        "@smartface/native": "^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha",
-        "@smartface/extension-utils": "^16.0.0",
         "@smartface/contx": "^4.0.0",
+        "@smartface/extension-utils": "^16.0.0",
+        "@smartface/native": "^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha",
         "@types/node": "^16.6.1",
         "typescript": "^4.3.5"
     },
     "peerDependencies": {
-        "@smartface/native": "^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha",
+        "@smartface/contx": "^4.0.0",
         "@smartface/extension-utils": "^16.0.0",
-        "@smartface/contx": "^4.0.0"
+        "@smartface/native": "^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha"
     }
 }
