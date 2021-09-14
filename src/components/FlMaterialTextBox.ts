@@ -5,7 +5,7 @@ import Label from "@smartface/native/ui/label";
 import FlexLayout from "@smartface/native/ui/flexlayout";
 import MaterialTextBox from "@smartface/native/ui/materialtextbox";
 import { getCombinedStyle } from "@smartface/extension-utils/lib/getCombinedStyle";
-import { componentContextPatch } from "@smartface/contx/lib/smartface";
+import componentContextPatch from "@smartface/contx/lib/smartface/componentContextPatch";
 const { height: wrapperHeight } = getCombinedStyle(".materialTextBox-wrapper");
 const RightLayoutTemplate = {
     showHide: 0,
