@@ -13,22 +13,20 @@ const RightLayoutTemplate = {
 };
 Object.freeze(RightLayoutTemplate);
 
+type OptionType = Partial<MaterialTextBox> & { ios?: Partial<MaterialTextBox["ios"]>, android?: Partial<MaterialTextBox["android"]>, className?: string };
+
 export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
-    materialTextBox: any = {
-        ios: {},
-        android: {}
-    };
+    materialTextBox: MaterialTextBox;
     pageName?: string;
-    _arrowVisibility: boolean = false;
-    _showHideEnabled: boolean = false;
-    _clearAllEnabled: boolean = false;
-    _dropDownClick: boolean = false;
-    _options: any;
-    _trim: boolean = true;
+    private _arrowVisibility: boolean = false;
+    private _showHideEnabled: boolean = false;
+    private _clearAllEnabled: boolean = false;
+    private _dropDownClick: boolean = false;
+    private _options: OptionType = {};
+    private _trim: boolean = true;
     constructor(props?: ConstructorParameters<typeof FlexLayout>, pageName?: string) {
         super(props);
         this.pageName = pageName;
-        this._options = props;
     }
 
     get enableDropDown(): boolean {
@@ -137,7 +135,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     changeOnEditEndsFunction = () => {
         const { materialTextBox } = this;
         let editEnds = materialTextBox.onEditEnds;
-        materialTextBox.onEditEnds = function () {
+        materialTextBox.onEditEnds =  () => {
             // Override the existing function to have dynamic onTextChanged function
             if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
                 materialTextBox.rightLayout.view.visible = false;
@@ -244,7 +242,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         return materialTextBox;
     }
 
-    initMaterialTextBox = (materialTextBox: any, className = "") => {
+    initMaterialTextBox = (materialTextBox: MaterialTextBox, className = "") => {
         const materialClassName = `.materialTextBox${className}`;
         const testId = this.materialTextBox.testId;
         this.materialTextBox = materialTextBox;
@@ -271,5 +269,10 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this.changeOnEditEndsFunction.call(this);
     }
 
+    removeWhiteSpaces(text: string) {
+        const pattern = { startsWithWhiteSpace: /^\s+|\s+$/g, moreThanOneWhitespaceBetweenWords: /\s\s+/g };
+        return text.replace(pattern.startsWithWhiteSpace, "").replace(pattern.moreThanOneWhitespaceBetweenWords, " ");
+    }
+    
 }
 
