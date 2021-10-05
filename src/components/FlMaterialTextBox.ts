@@ -16,7 +16,7 @@ Object.freeze(RightLayoutTemplate);
 type OptionType = Partial<MaterialTextBox> & { ios?: Partial<MaterialTextBox["ios"]>, android?: Partial<MaterialTextBox["android"]>, className?: string };
 
 export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
-    materialTextBox: MaterialTextBox;
+    materialTextBox!: MaterialTextBox;
     pageName?: string;
     private _arrowVisibility: boolean = false;
     private _showHideEnabled: boolean = false;
@@ -41,7 +41,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 
     set onDropDownClick(value: any) {
         this._dropDownClick = typeof value === "function";
-        if (System.OS === "iOS") {
+        if (System.OS === System.OSType.IOS) {
             this.onTouchEnded = (isInside: boolean) => this._dropDownClick && value(isInside);
             this.materialTextBox.touchEnabled = !this._dropDownClick;
         }
