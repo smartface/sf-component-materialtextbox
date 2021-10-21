@@ -16,7 +16,8 @@ enum RightLayouts {
 type OptionType = Partial<MaterialTextBox> & { ios?: Partial<MaterialTextBox["ios"]>, android?: Partial<MaterialTextBox["android"]>, className?: string };
 
 export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
-    private _materialTextBox!: MaterialTextBox;
+    //@ts-ignore
+    private _materialTextBox: MaterialTextBox = { ios: {}, android: {} };
     pageName?: string;
     private _arrowVisibility = false;
     private _showHideEnabled = false;
@@ -36,7 +37,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     }
 
     get materialTextBox(): MaterialTextBox {
-        return this._materialTextBox || { ios: {}, android: {} };
+        return this._materialTextBox;
     }
 
     private set materialTextBox(value: MaterialTextBox) {
@@ -255,11 +256,12 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 
     initMaterialTextBox(materialTextBox: MaterialTextBox, className = "") {
         const materialClassName = `.materialTextBox${className}`;
-        this.materialTextBox = materialTextBox;
-        const testId = this.materialTextBox.testId;
+        const testId = this.materialTextBox?.testId || '';
         if (testId) {
-            this.materialTextBox.testId = testId;
+            materialTextBox.testId = testId;
         }
+        this.materialTextBox = materialTextBox;
+
         materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
             //@ts-ignore
             this.errorMessage = "";
