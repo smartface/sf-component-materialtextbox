@@ -5,6 +5,7 @@ import Label from "@smartface/native/ui/label";
 import FlexLayout from "@smartface/native/ui/flexlayout";
 import MaterialTextBox from "@smartface/native/ui/materialtextbox";
 import { getCombinedStyle } from "@smartface/extension-utils/lib/getCombinedStyle";
+import guid from "@smartface/extension-utils/lib/guid";
 import componentContextPatch from "@smartface/contx/lib/smartface/componentContextPatch";
 import View from "@smartface/native/ui/view";
 const { height: wrapperHeight } = getCombinedStyle(".materialTextBox-wrapper");
@@ -25,8 +26,10 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     private _dropDownClick = false;
     private _options: OptionType = {};
     private _trim = true;
-    private rightLayout = new FlexLayout();
-    private rightLabel = new Label();
+    private rightLabel!: StyleContextComponentType<Label>;
+    private rightLayout!: StyleContextComponentType<FlexLayout>;
+    private rightLayoutGuid = guid();
+    private rightLabelGuid = guid();
     constructor(props?: ConstructorParameters<typeof FlexLayout>, pageName?: string) {
         super(props);
         this.pageName = pageName;
@@ -76,14 +79,12 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     }
 
     set showHideEnabled(value: boolean) {
-        if (this.materialTextBox instanceof MaterialTextBox) {
-            this.materialTextBox.ios.clearButtonEnabled = !value;
-            !this._showHideEnabled && this.createRightLayout(this, RightLayouts.SHOW_HIDE, false);
-            this.changeOnTextChangedFunction.call(this);
-            this.changeOnEditBeginsFunction.call(this);
-            this.changeOnEditEndsFunction.call(this);
-            this._showHideEnabled = value;
+        if (!(this.materialTextBox instanceof MaterialTextBox)) {
+            console.error('Attempting to set showHideEnabled value without initializing materialTextBox.');
+            return;
         }
+        this.initRightLayout(RightLayouts.SHOW_HIDE, value)
+        this._showHideEnabled = value;
     }
 
     get clearAllEnabled(): boolean {
@@ -91,15 +92,14 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     }
 
     set clearAllEnabled(value: boolean) {
-        if (this.materialTextBox instanceof MaterialTextBox) {
-            this.materialTextBox.ios.clearButtonEnabled = !value;
-            !this._clearAllEnabled && this.createRightLayout(this, RightLayouts.CLEAR_ALL, false);
-            this.changeOnTextChangedFunction.call(this);
-            this.changeOnEditBeginsFunction.call(this);
-            this.changeOnEditEndsFunction.call(this);
-            this._clearAllEnabled = value;
+        if (!(this.materialTextBox instanceof MaterialTextBox)) {
+            console.error('Attempting to set clearAllEnabled value without initializing materialTextBox.');
+            return;
         }
+        this.initRightLayout(RightLayouts.CLEAR_ALL, value)
+        this._clearAllEnabled = value;
     }
+    
 
     get trim(): boolean {
         return this._trim;
@@ -119,104 +119,112 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this._options = properties;
     }
 
+    private initRightLayout(template: RightLayouts, toggle: boolean) {
+        this.materialTextBox.ios.clearButtonEnabled = !toggle;
+        this.createRightLayout();
+        this.setRightLayoutTemplate(template);
+        this.setVisibility(this.materialTextBox.rightLayout.view, toggle);
+    }
+
     private changeOnTextChangedFunction() {
-        const { materialTextBox } = this;
-        let textChanged = materialTextBox.onTextChanged;
-        materialTextBox.onTextChanged = () => {
+        const textChanged = this.materialTextBox.onTextChanged;
+        this.materialTextBox.onTextChanged = () => {
             // Override the existing function to have dynamic onTextChanged function
-            if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
-                materialTextBox.rightLayout.view.visible = !!materialTextBox.text;
+            if (this.materialTextBox.rightLayout?.view) {
+                this.materialTextBox.rightLayout.view.visible = !!this.materialTextBox.text;
             }
-            textChanged && textChanged.call(materialTextBox);
+            textChanged && textChanged.call(this.materialTextBox);
         }
     }
 
     private changeOnEditBeginsFunction() {
-        const { materialTextBox } = this;
-        let editBegins = materialTextBox.onEditBegins;
-        materialTextBox.onEditBegins = () => {
+        const editBegins = this.materialTextBox.onEditBegins;
+        this.materialTextBox.onEditBegins = () => {
             // Override the existing function to have dynamic onTextChanged function
-            if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
-                materialTextBox.rightLayout.view.visible = !!materialTextBox.text;
+            if (this.materialTextBox.rightLayout?.view) {
+                this.materialTextBox.rightLayout.view.visible = !!this.materialTextBox.text;
             }
-            editBegins && editBegins.call(materialTextBox);
+            editBegins && editBegins.call(this.materialTextBox);
         }
     }
 
     private changeOnEditEndsFunction() {
-        const { materialTextBox } = this;
-        let editEnds = materialTextBox.onEditEnds;
-        materialTextBox.onEditEnds =  () => {
+        const editEnds = this.materialTextBox.onEditEnds;
+        this.materialTextBox.onEditEnds =  () => {
             // Override the existing function to have dynamic onTextChanged function
-            if (materialTextBox.rightLayout && materialTextBox.rightLayout.view) {
-                materialTextBox.rightLayout.view.visible = false;
+            if (this.materialTextBox.rightLayout?.view) {
+                this.materialTextBox.rightLayout.view.visible = false;
             }
             if (this._trim) {
-                materialTextBox.text = this.removeWhiteSpaces(materialTextBox.text || "");
-                materialTextBox.onTextChanged();
+                this.materialTextBox.text = this.removeWhiteSpaces(this.materialTextBox.text || "");
+                this.materialTextBox.onTextChanged();
             }
-            editEnds && editEnds.call(materialTextBox);
+            editEnds && editEnds.call(this.materialTextBox);
         }
     }
 
-    private createRightLayout(component: FlMaterialTextBox, RightLayoutTemplate: RightLayouts, visible: boolean) {
-        if (!(component.materialTextBox instanceof MaterialTextBox)) return;
-        componentContextPatch(component.rightLayout, "mtbRightLayout"); // TODO: use $$styleContext
-        //@ts-ignore
-        component.rightLayout.dispatch({
+    private createRightLayout() {
+        this.rightLayout = new FlexLayout() as StyleContextComponentType<FlexLayout>;
+        this.rightLabel = new Label() as StyleContextComponentType<Label>;
+        componentContextPatch(this.rightLayout, `mtbRightLayout-${this.rightLayoutGuid}`); // TODO: use $$styleContext
+        this.rightLayout.dispatch({
             type: "pushClassNames",
             classNames: [".materialTextBox-rightLayout"]
         });
-        //@ts-ignore
-        component.rightLayout.addChild(component.rightLabel, "mtbRightLabel", ".materialTextBox-rightLayout-rightLabel");
-        this.initRightLayout(component, RightLayoutTemplate, visible);
+        this.rightLayout.addChild(this.rightLabel, `mtbrightLabel-${this.rightLabelGuid}`, ".materialTextBox-rightLayout-rightLabel");
+        return this.rightLayout;
     }
 
-    private initRightLayout(component: FlMaterialTextBox, RightLayoutTemplate: RightLayouts, visible: boolean) {
+    private setRightLayoutTemplate(RightLayoutTemplate: RightLayouts) {
         //@ts-ignore
-        let showTitle = global.lang.show || "SHOW";
+        const showTitle = global.lang.show || "SHOW";
         //@ts-ignore
-        let hideTitle = global.lang.hide || "HIDE";
+        const hideTitle = global.lang.hide || "HIDE";
         //@ts-ignore
-        let clearAll = global.lang.clearAll || "CLEAR ALL";
+        const clearAll = global.lang.clearAll || "CLEAR ALL";
         let rightLayoutWidth = 0;
-        //@ts-ignore
-        this.setVisibility(component.rightLayout, visible);
         switch (RightLayoutTemplate) {
-            case RightLayouts.SHOW_HIDE: { // SHOWHIDE
-                component.rightLabel.text = showTitle;
-                let showWidth = component.rightLabel.font.sizeOfString(showTitle, Screen.width / 2).width;
-                let hideWidth = component.rightLabel.font.sizeOfString(hideTitle, Screen.width / 2).width;
+            case RightLayouts.SHOW_HIDE: {
+                this.rightLabel.text = showTitle;
+                const showWidth = this.rightLabel.font.sizeOfString(showTitle, Screen.width / 2).width;
+                const hideWidth = this.rightLabel.font.sizeOfString(hideTitle, Screen.width / 2).width;
                 rightLayoutWidth = Math.max(showWidth, hideWidth);
-                component.rightLayout.onTouchEnded = () => {
-                    let { isPassword, cursorPosition } = component.materialTextBox;
-                    component.rightLabel.text = isPassword ? hideTitle : showTitle;
-                    component.materialTextBox.isPassword = !isPassword;
-                    component.materialTextBox.cursorPosition = cursorPosition; // Android workaround for cursor moving around
+                this.rightLayout.onTouchEnded = () => {
+                    const { isPassword, cursorPosition } = this.materialTextBox;
+                    this.rightLabel.text = isPassword ? hideTitle : showTitle;
+                    this.materialTextBox.isPassword = !isPassword;
+                    this.materialTextBox.cursorPosition = cursorPosition; // Android workaround for cursor moving around
                 };
                 break;
             }
-            case RightLayouts.CLEAR_ALL: // CLEARALL
-            component.rightLabel.text = clearAll;
-                rightLayoutWidth = component.rightLabel.font.sizeOfString(component.rightLabel.text, Screen.width / 2).width;
-                component.rightLayout.onTouchEnded = () => {
-                    component.materialTextBox.text = "";
-                    component.materialTextBox.onTextChanged();
-                    component.materialTextBox.errorMessage = "";
-                    component.rightLayout.visible = false;
+            case RightLayouts.CLEAR_ALL: {
+                this.rightLabel.text = clearAll;
+                rightLayoutWidth = this.rightLabel.font.sizeOfString(this.rightLabel.text, Screen.width / 2).width;
+                this.rightLayout.onTouchEnded = () => {
+                    this.materialTextBox.text = "";
+                    this.materialTextBox.onTextChanged();
+                    this.materialTextBox.errorMessage = "";
+                    this.rightLayout.visible = false;
                 };
                 break;
-            default:
+            }
+            default: {
                 return;
+            }
         }
-        component.materialTextBox.rightLayout = {
-            view: component.rightLayout,
+        this.materialTextBox.rightLayout = {
+            view: this.rightLayout,
             width: rightLayoutWidth + 10 // Seems like sizeOfString is not enough to cut it, add a buffer.
         };
+        this.changeOnTextChangedFunction();
+        this.changeOnEditBeginsFunction();
+        this.changeOnEditEndsFunction();
     }
 
-    setVisibility(component: StyleContextComponentType<View>, visible: boolean) {
-        if (component.dispatch) {
+    setVisibility(component: View, visible: boolean) {
+            //@ts-ignore
+        if (typeof component.dispatch === 'function') {
+            //@ts-ignore
             component.dispatch({
                 type: "updateUserStyle",
                 userStyle: {
@@ -262,18 +270,16 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         }
         this.materialTextBox = materialTextBox;
 
-        materialTextBox.onTextChanged = materialTextBox.onTextChanged || function () {
-            //@ts-ignore
+        materialTextBox.onTextChanged = materialTextBox.onTextChanged || function (this: MaterialTextBox) {
             this.errorMessage = "";
         }.bind(materialTextBox);
-        materialTextBox.onTouchMoved = materialTextBox.onTouchMoved || function () {
-            //@ts-ignore
+        materialTextBox.onTouchMoved = materialTextBox.onTouchMoved || function (this: MaterialTextBox) {
+            //@ts-ignore - Add requestDisallowInterceptTouchEvent to ViewGroup
             this.getParent().android.requestDisallowInterceptTouchEvent(false);
             return false;
         }.bind(materialTextBox);
         this.removeAll();
-        //@ts-ignore
-        this.addChild(materialTextBox, "materialTextBox", materialClassName, userProps => {
+        this.addChild(materialTextBox, "materialTextBox", materialClassName, (userProps: Record<string, any>) => {
             if (wrapperHeight) {
                 userProps.height = userProps.height || wrapperHeight;
             }
