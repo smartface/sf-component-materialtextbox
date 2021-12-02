@@ -24,7 +24,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     private _showHideEnabled = false;
     private _clearAllEnabled = false;
     private _dropDownClick = false;
-    private _onRightLayoutClick: () => void = () => {};
+    private _onRightLayoutClick?: () => void;
     private _options: OptionType = {};
     private _trim = true;
     private rightLabel!: StyleContextComponentType<Label>;
@@ -199,7 +199,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
                     this.rightLabel.text = isPassword ? hideTitle : showTitle;
                     this.materialTextBox.isPassword = !isPassword;
                     this.materialTextBox.cursorPosition = cursorPosition; // Android workaround for cursor moving around
-                    this._onRightLayoutClick();
+                    typeof this._onRightLayoutClick === 'function' && this._onRightLayoutClick();
                 };
                 break;
             }
@@ -211,7 +211,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
                     this.materialTextBox.onTextChanged();
                     this.materialTextBox.errorMessage = "";
                     this.setVisibility(this.rightLayout, false);
-                    this._onRightLayoutClick()
+                    typeof this._onRightLayoutClick === 'function' && this._onRightLayoutClick()
                 };
                 break;
             }
