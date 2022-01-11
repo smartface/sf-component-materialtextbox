@@ -32,10 +32,12 @@
   dependencies:
     html-parse-stringify "1.0.2"
 
-"@smartface/native@^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha":
-  version "4.3.5-beta.0"
-  resolved "https://registry.yarnpkg.com/@smartface/native/-/native-4.3.5-beta.0.tgz#ad2e3ef96322585212263c948c4a45e260529a9f"
-  integrity sha512-AZaVcLeTFdMw5lfekp+HEolp992bQxBJWtpapTDjJX8vii7e/NcCKNvr4Vm+85rW7FzbseoawlMnXHFXlR5voA==
+"@smartface/native@^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha || ^4.3.6-beta || ^4.3.6.alpha":
+  version "4.3.6-beta.12"
+  resolved "https://registry.yarnpkg.com/@smartface/native/-/native-4.3.6-beta.12.tgz#89ab42e77a249714f50f0b5581e5955cdcaf8f13"
+  integrity sha512-KelaAxOHaOXAUnb5uTYgH0PuSCb6jaFUciCGNnjbln4p+BzmQYRmNxiOY67GjYPkXF1i2bqshrbuZZMWkL3EGw==
+  dependencies:
+    events "^3.3.0"
 
 "@smartface/styler@^2.0.0":
   version "2.0.0"
@@ -63,6 +65,11 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+
+events@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
+  integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
 filter-obj@^1.1.0:
   version "1.1.0"
