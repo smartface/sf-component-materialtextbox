@@ -18,7 +18,7 @@
   dependencies:
     html-parse-stringify "1.0.2"
 
-"@smartface/native@^4.3.4 || ^4.3.5-beta || ^4.3.5.alpha || ^4.3.6-beta || ^4.3.6.alpha":
+"@smartface/native@^4.3.6-alpha":
   version "4.3.6-beta.12"
   resolved "https://registry.yarnpkg.com/@smartface/native/-/native-4.3.6-beta.12.tgz#89ab42e77a249714f50f0b5581e5955cdcaf8f13"
   integrity sha512-KelaAxOHaOXAUnb5uTYgH0PuSCb6jaFUciCGNnjbln4p+BzmQYRmNxiOY67GjYPkXF1i2bqshrbuZZMWkL3EGw==
