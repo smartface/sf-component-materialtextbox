@@ -4,11 +4,10 @@ import FlMaterialTextBoxDesign from "../generated/FlMaterialTextBox";
 import Label from "@smartface/native/ui/label";
 import FlexLayout from "@smartface/native/ui/flexlayout";
 import MaterialTextBox from "@smartface/native/ui/materialtextbox";
-import { getCombinedStyle } from "@smartface/extension-utils/lib/getCombinedStyle";
-import guid from "@smartface/extension-utils/lib/guid";
+import { ThemeService } from '@smartface/styling-context/lib/ThemeService';
 import componentContextPatch from "@smartface/contx/lib/smartface/componentContextPatch";
 import View from "@smartface/native/ui/view";
-const { height: wrapperHeight } = getCombinedStyle(".materialTextBox-wrapper");
+const { height: wrapperHeight } = ThemeService.instance.getStyle(".materialTextBox-wrapper");
 enum RightLayouts {
     SHOW_HIDE,
     CLEAR_ALL
@@ -301,3 +300,12 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     }
 }
 
+function guid(): string {
+  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+}
+  
+function s4() {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+};
