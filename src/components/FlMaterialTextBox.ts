@@ -24,6 +24,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     private _showHideEnabled = false;
     private _clearAllEnabled = false;
     private _dropDownClick = false;
+    private _onRightLayoutClick?: () => void;
     private _options: OptionType = {};
     private _trim = true;
     private rightLabel!: StyleContextComponentType<Label>;
@@ -72,6 +73,10 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
                 this.android.onInterceptTouchEvent = null;
             }
         }
+    }
+
+    set onRightLayoutClick(value: () => void) {
+        this._onRightLayoutClick = typeof value === "function" ? value : () => { };
     }
 
     get showHideEnabled(): boolean {
@@ -123,7 +128,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this.materialTextBox.ios.clearButtonEnabled = !toggle;
         this.createRightLayout();
         this.setRightLayoutTemplate(template);
-        this.setVisibility(this.materialTextBox.rightLayout.view, toggle);
+        this.setVisibility(this.materialTextBox.rightLayout.view, false);
     }
 
     private changeOnTextChangedFunction() {
@@ -131,7 +136,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this.materialTextBox.onTextChanged = () => {
             // Override the existing function to have dynamic onTextChanged function
             if (this.materialTextBox.rightLayout?.view) {
-                this.materialTextBox.rightLayout.view.visible = !!this.materialTextBox.text;
+                this.setVisibility(this.materialTextBox.rightLayout.view, !!this.materialTextBox.text);
             }
             textChanged && textChanged.call(this.materialTextBox);
         }
@@ -142,7 +147,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this.materialTextBox.onEditBegins = () => {
             // Override the existing function to have dynamic onTextChanged function
             if (this.materialTextBox.rightLayout?.view) {
-                this.materialTextBox.rightLayout.view.visible = !!this.materialTextBox.text;
+                this.setVisibility(this.materialTextBox.rightLayout.view, !!this.materialTextBox.text);
             }
             editBegins && editBegins.call(this.materialTextBox);
         }
@@ -152,12 +157,12 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         const editEnds = this.materialTextBox.onEditEnds;
         this.materialTextBox.onEditEnds =  () => {
             // Override the existing function to have dynamic onTextChanged function
-            if (this.materialTextBox.rightLayout?.view) {
-                this.materialTextBox.rightLayout.view.visible = false;
-            }
             if (this._trim) {
                 this.materialTextBox.text = this.removeWhiteSpaces(this.materialTextBox.text || "");
                 this.materialTextBox.onTextChanged();
+            }
+            if (this.materialTextBox.rightLayout?.view) {
+                this.setVisibility(this.materialTextBox.rightLayout.view, false);
             }
             editEnds && editEnds.call(this.materialTextBox);
         }
@@ -194,6 +199,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
                     this.rightLabel.text = isPassword ? hideTitle : showTitle;
                     this.materialTextBox.isPassword = !isPassword;
                     this.materialTextBox.cursorPosition = cursorPosition; // Android workaround for cursor moving around
+                    typeof this._onRightLayoutClick === 'function' && this._onRightLayoutClick();
                 };
                 break;
             }
@@ -204,7 +210,8 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
                     this.materialTextBox.text = "";
                     this.materialTextBox.onTextChanged();
                     this.materialTextBox.errorMessage = "";
-                    this.rightLayout.visible = false;
+                    this.setVisibility(this.rightLayout, false);
+                    typeof this._onRightLayoutClick === 'function' && this._onRightLayoutClick()
                 };
                 break;
             }
@@ -222,7 +229,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     }
 
     setVisibility(component: View, visible: boolean) {
-            //@ts-ignore
+        //@ts-ignore
         if (typeof component.dispatch === 'function') {
             //@ts-ignore
             component.dispatch({
