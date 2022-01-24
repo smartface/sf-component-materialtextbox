@@ -169,12 +169,16 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this.rightLayout = new FlexLayout() as StyleContextComponentType<FlexLayout>;
         this.rightLabel = new Label() as StyleContextComponentType<Label>;
         ThemeService.instance.addGlobalComponent(this.rightLayout as any, `mtbRightLayout-${this.rightLayoutGuid}`);
-        this.rightLayout.dispatch({
+        this.rightLayout.dispatch?.({
             type: "pushClassNames",
             classNames: [".materialTextBox-rightLayout"]
         });
         this.rightLayout.addChild(this.rightLabel);
-        this.rightLayout.addStyleableChild(this.rightLabel, `mtbrightLabel-${this.rightLabelGuid}`, ".materialTextBox-rightLayout-rightLabel");
+        ThemeService.instance.addGlobalComponent(this.rightLabel as any, `mtbrightLabel-${this.rightLabelGuid}`);
+        this.rightLabel.dispatch?.({
+            type: 'pushClassNames',
+            classNames: [".materialTextBox-rightLayout-rightLabel"]
+        })
         return this.rightLayout;
     }
 
