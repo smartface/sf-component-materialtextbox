@@ -6,45 +6,79 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 //
 //------------------------------------------------------------------------------
-import { Styleable } from './core/Styleable';
+import { Styleable } from 'generated/core/Styleable';
 import View = require('@smartface/native/ui/view');
-import { ComponentStyleContext } from './core/ComponentStyleContext';
+import { ComponentStyleContext } from '@smartface/styling-context/lib/ComponentStyleContext';
+import { extendOfViewGroup } from '@smartface/styling-context/lib/extendOfViewGroup';
+import { styleableComponentMixin, styleableContainerComponentMixin } from '@smartface/styling-context/lib/styleableComponentMixin';
+import System = require('@smartface/native/device/system');
 
 import FlexLayout = require('@smartface/native/ui/flexlayout');
 import ImageView = require('@smartface/native/ui/imageview');
 
-export default class Materialtextbox extends FlexLayout implements Styleable {
-	dispatch: (action: { [key: string]: any }) => void = () => {};
-	children: { [key: string]: any } = {};
-	static $$styleContext: ComponentStyleContext = {
-		classNames: '.materialTextBox-wrapper',
-		defaultClassNames: '.default_common .default_flexLayout',
-		userProps: { testId: '___library___Materialtextbox' }
-	};
-	imgDropDown: StyleContextComponentType<$Materialtextbox$$ImgDropDown>;
-	constructor(props?: ConstructorParameters<typeof FlexLayout>) {
-		super();
-
-		this.addChildByName(new $Materialtextbox$$ImgDropDown(), 'imgDropDown');
-		this.imgDropDown = this.children.imgDropDown;
-	}
-	addChildByName(child: View, name: string) {
-		this.children[name] = child;
-		this.addChild(child);
-	}
-	addChild(child: View, name?: string, classNames?: string, userProps?: { [key: string]: any }, defaultClassNames?: string): void {
-		super.addChild(child);
-	}
+interface MaterialtextboxChildren {
+  imgDropDown?: $Materialtextbox$$ImgDropDown;
+  [key: string]: any;
 }
 
-class $Materialtextbox$$ImgDropDown extends ImageView implements Styleable {
-	dispatch: (action: { [key: string]: any }) => void= () => {};
-	static $$styleContext: ComponentStyleContext = {
-		classNames: '.materialTextBox-wrapper-dropArrow.hidden',
-		defaultClassNames: '.default_common .default_imageView',
-		userProps: { testId: '___library___Materialtextbox_ImgDropDown' }
-	};
-	constructor() {
-		super();
-	}
+export default class Materialtextbox extends styleableContainerComponentMixin(FlexLayout) {
+  protected _children: MaterialtextboxChildren = {};
+  get children(): Readonly<MaterialtextboxChildren> {
+    return this._children;
+  }
+  static $$styleContext: ComponentStyleContext = {
+    classNames: '.materialTextBox-wrapper',
+    defaultClassNames: '.default_common .default_flexLayout',
+    userProps: {}
+  };
+  imgDropDown: $Materialtextbox$$ImgDropDown;
+  constructor(props?: any) {
+    super(props);
+
+    this.addChildByName(new $Materialtextbox$$ImgDropDown(), 'imgDropDown');
+    this.imgDropDown = this.children.imgDropDown;
+
+    this.testId = '___library___Materialtextbox';
+  }
+
+  /**
+   * @deprecated The method should not be used
+   */
+  addChildByName(child: View<any>, name: string) {
+    this._children[name] = child;
+    this.addStyleableChild(child, name);
+    this.addChild(child);
+  }
+  addChild(child: View<any>, name?: string, classNames?: string, userProps?: { [key: string]: any }, defaultClassNames?: string): void {
+    if (this['layout']) {
+      this['layout'].addChild(child);
+    } else {
+      super.addChild(child);
+    }
+    if (name) {
+      this.addStyleableChild(child, name, classNames, userProps, defaultClassNames);
+    }
+  }
+
+  applyTestIDs(testId: string) {
+    Object.keys(this._children).forEach(child => {
+      this._children[child].testId = testId + '_' + child.charAt(0).toUpperCase() + child.slice(1);
+      if (this._children[child].applyTestIDs) {
+        this._children[child].applyTestIDs(this._children[child].testId);
+      }
+    });
+  }
+}
+
+class $Materialtextbox$$ImgDropDown extends styleableComponentMixin(ImageView) {
+  static $$styleContext: ComponentStyleContext = {
+    classNames: '.materialTextBox-wrapper-dropArrow.hidden',
+    defaultClassNames: '.default_common .default_imageView',
+    userProps: {}
+  };
+  constructor(props?: any) {
+    super(props);
+
+    this.testId = '___library___Materialtextbox_ImgDropDown';
+  }
 }

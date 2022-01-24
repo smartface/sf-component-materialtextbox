@@ -4,8 +4,7 @@ import FlMaterialTextBoxDesign from "../generated/FlMaterialTextBox";
 import Label from "@smartface/native/ui/label";
 import FlexLayout from "@smartface/native/ui/flexlayout";
 import MaterialTextBox from "@smartface/native/ui/materialtextbox";
-import { ThemeService } from '@smartface/styling-context/lib/ThemeService';
-import componentContextPatch from "@smartface/contx/lib/smartface/componentContextPatch";
+import { ThemeService, StyleContextComponentType } from '@smartface/styling-context';
 import View from "@smartface/native/ui/view";
 const { height: wrapperHeight } = ThemeService.instance.getStyle(".materialTextBox-wrapper");
 enum RightLayouts {
@@ -53,7 +52,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         this.materialTextBox.ios.clearButtonEnabled = !this._arrowVisibility;
     }
 
-    set onDropDownClick(value: FlexLayout['onTouchEnded']) {
+    set onDropDownClick(value: View['onTouchEnded']) {
         this._dropDownClick = typeof value === "function";
         if (System.OS === System.OSType.IOS) {
             this.onTouchEnded = (isInside: boolean) => this._dropDownClick && value(isInside, {});
@@ -68,7 +67,6 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
                 }
             }
             else {
-                //@ts-ignore
                 this.android.onInterceptTouchEvent = null;
             }
         }
@@ -166,25 +164,23 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
             editEnds && editEnds.call(this.materialTextBox);
         }
     }
-
+ 
     private createRightLayout() {
         this.rightLayout = new FlexLayout() as StyleContextComponentType<FlexLayout>;
         this.rightLabel = new Label() as StyleContextComponentType<Label>;
-        componentContextPatch(this.rightLayout, `mtbRightLayout-${this.rightLayoutGuid}`); // TODO: use $$styleContext
+        ThemeService.instance.addGlobalComponent(this.rightLayout as any, `mtbRightLayout-${this.rightLayoutGuid}`);
         this.rightLayout.dispatch({
             type: "pushClassNames",
             classNames: [".materialTextBox-rightLayout"]
         });
-        this.rightLayout.addChild(this.rightLabel, `mtbrightLabel-${this.rightLabelGuid}`, ".materialTextBox-rightLayout-rightLabel");
+        this.rightLayout.addChild(this.rightLabel);
+        this.rightLayout.addStyleableChild(this.rightLabel, `mtbrightLabel-${this.rightLabelGuid}`, ".materialTextBox-rightLayout-rightLabel");
         return this.rightLayout;
     }
 
     private setRightLayoutTemplate(RightLayoutTemplate: RightLayouts) {
-        //@ts-ignore
         const showTitle = global.lang.show || "SHOW";
-        //@ts-ignore
         const hideTitle = global.lang.hide || "HIDE";
-        //@ts-ignore
         const clearAll = global.lang.clearAll || "CLEAR ALL";
         let rightLayoutWidth = 0;
         switch (RightLayoutTemplate) {
@@ -256,14 +252,10 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
         let purifiedOptions = Object.assign({}, defaults, options);
         let purifiedIOS = Object.assign({}, defaults.ios, options.ios || {});
         let purifiedAndroid = Object.assign({}, defaults.android, options.android || {});
-        //@ts-ignore
         delete purifiedOptions.ios;
-        //@ts-ignore
         delete purifiedOptions.android;
         let materialTextBox = new MaterialTextBox(purifiedOptions);
-        //@ts-ignore
         Object.keys(purifiedIOS).forEach(key => materialTextBox.ios[key] = purifiedIOS[key]);
-        //@ts-ignore
         Object.keys(purifiedAndroid).forEach(key => materialTextBox.android[key] = purifiedAndroid[key]);
         return materialTextBox;
     }
@@ -285,7 +277,8 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
             return false;
         }.bind(materialTextBox);
         this.removeAll();
-        this.addChild(materialTextBox, "materialTextBox", materialClassName, (userProps: Record<string, any>) => {
+        this.addChild(materialTextBox);
+        this.addStyleableChild(materialTextBox, "materialTextBox", materialClassName, (userProps: Record<string, any>) => {
             if (wrapperHeight) {
                 userProps.height = userProps.height || wrapperHeight;
             }
@@ -309,3 +302,10 @@ function s4() {
     .toString(16)
     .substring(1);
 };
+
+// scripts/generated/pages/page1/index.ts(63,25): error TS2345: Argument of type '$MaterialTextBox' is not assignable to parameter of type 'View<any>'.
+//   Property 'emitter' is protected but type 'View<TEvent>' is not a class derived from 'View<TEvent>'.
+
+// 4:56:05 PM - Found 1 error. Watching for file changes.
+
+
