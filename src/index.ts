@@ -1,3 +1,3 @@
 import MaterialTextbox from "./components/FlMaterialTextBox";
 
-export = MaterialTextbox;
+export default MaterialTextbox;

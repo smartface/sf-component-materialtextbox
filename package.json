@@ -1,36 +1,36 @@
 {
-    "name": "@smartface/component-materialtextbox",
-    "description": "A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.",
-    "version": "7.0.1",
-    "main": "dist/index.js",
-    "repository": "https://github.com/smartface/sf-component-materialtextbox",
-    "scripts": {
-        "postinstall": "node postinstall.js",
-        "watch": "tsc -w",
-        "build": "tsc"
-    },
-    "author": {
-        "email": "info@smartface.io",
-        "name": "Smartface Inc."
-    },
-    "maintainers": [
-        {
-            "email": "furkan.arabaci@smartface.io",
-            "name": "Furkan Arabacı"
-        }
-    ],
-    "license": "MIT",
-    "publishConfig": {
-        "access": "public"
-    },
-    "devDependencies": {
-        "@smartface/marketplace-service": "^1.2.0",
-        "@smartface/native": "^4.4.0",
-        "@smartface/styling-context": "^1.1.8",
-        "@types/node": "^16.6.1",
-        "typescript": "^4.3.5"
-    },
-    "peerDependencies": {
-        "@smartface/styling-context": "^1.1.8"
+  "name": "@smartface/component-materialtextbox",
+  "description": "A marketplace component to overcome the quirks of [MaterialTextBox](http://ref.smartface.io/#!/api/UI.MaterialTextBox) to make it easier to use.",
+  "version": "7.0.1",
+  "main": "dist/index.js",
+  "repository": "https://github.com/smartface/sf-component-materialtextbox",
+  "scripts": {
+    "postinstall": "node postinstall.js",
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "author": {
+    "email": "info@smartface.io",
+    "name": "Smartface Inc."
+  },
+  "maintainers": [
+    {
+      "email": "furkan.arabaci@smartface.io",
+      "name": "Furkan Arabacı"
     }
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@smartface/marketplace-service": "^1.2.0",
+    "@smartface/native": "^5.0.0-alpha",
+    "@smartface/styling-context": "^5.0.0-alpha",
+    "@types/node": "^16.6.1",
+    "typescript": "^4.5.0"
+  },
+  "peerDependencies": {
+    "@smartface/styling-context": "^5.0.0"
+  }
 }
