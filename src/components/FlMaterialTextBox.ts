@@ -25,6 +25,9 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     private _onRightLayoutClick?: () => void;
     private _options: OptionType = {};
     private _trim = true;
+    private _showTitle = "SHOW";
+    private _hideTitle = "HIDE";
+    private _clearAllTitle = "CLEAR ALL";
     private rightLabel!: StyleContextComponentType<Label>;
     private rightLayout!: StyleContextComponentType<FlexLayout>;
     private rightLayoutGuid = guid();
@@ -32,6 +35,30 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     constructor(props?: ConstructorParameters<typeof FlexLayout>, pageName?: string) {
         super(props);
         this.pageName = pageName;
+    }
+
+    get showTitle(): string {
+        return this._showTitle;
+    }
+
+    set showTitle(value: string) {
+        this._showTitle = value;
+    }
+    
+    get hideTitle(): string {
+        return this._hideTitle;
+    }
+
+    set hideTitle(value: string) {
+        this._hideTitle = value;
+    }
+    
+    get clearAllTitle(): string {
+        return this._clearAllTitle;
+    }
+
+    set clearAllTitle(value: string) {
+        this._clearAllTitle = value;
     }
 
     get enableDropDown(): boolean {
@@ -183,9 +210,9 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
     }
 
     private setRightLayoutTemplate(RightLayoutTemplate: RightLayouts) {
-        const showTitle = global.lang.show || "SHOW";
-        const hideTitle = global.lang.hide || "HIDE";
-        const clearAll = global.lang.clearAll || "CLEAR ALL";
+        const showTitle = this._showTitle || "SHOW";
+        const hideTitle = this._hideTitle || "HIDE";
+        const clearAll = this._clearAllTitle || "CLEAR ALL";
         let rightLayoutWidth = 0;
         switch (RightLayoutTemplate) {
             case RightLayouts.SHOW_HIDE: {
