@@ -225,6 +225,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 					this.materialTextBox.isPassword = !isPassword;
 					this.materialTextBox.cursorPosition = cursorPosition; // Android workaround for cursor moving around
 					typeof this._onRightLayoutClick === "function" && this._onRightLayoutClick();
+					return false;
 				};
 				break;
 			}
@@ -237,6 +238,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 					this.materialTextBox.errorMessage = "";
 					this.setVisibility(this.rightLayout, false);
 					typeof this._onRightLayoutClick === "function" && this._onRightLayoutClick();
+					return false;
 				};
 				break;
 			}
@@ -253,7 +255,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 		this.changeOnEditEndsFunction();
 	}
 
-	setVisibility(component: View, visible: boolean) {
+	setVisibility(component: StyleContextComponentType<View>, visible: boolean) {
 		if (typeof component.dispatch === "function") {
 			component.dispatch({
 				type: "updateUserStyle",
