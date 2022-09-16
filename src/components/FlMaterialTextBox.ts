@@ -83,6 +83,7 @@ export default class FlMaterialTextBox extends FlMaterialTextBoxDesign {
 		this._dropDownClick = typeof value === "function";
 		if (System.OS === System.OSType.IOS) {
 			this.onTouchEnded = (isInside: boolean) => this._dropDownClick && value(isInside, {});
+			this.materialTextBox.touchEnabled = !this._dropDownClick;
 		} else {
 			if (this._dropDownClick) {
 				this.android.onInterceptTouchEvent = () => {
